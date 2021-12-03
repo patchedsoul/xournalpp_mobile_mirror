@@ -20,3 +20,11 @@ parts:
     plugin: flutter
     flutter-target: lib/main.dart # The main entry-point file of the application
 
+environment:
+  LD_LIBRARY_PATH: $SNAP/bin/lib
+
+slots:
+  session-dbus-interface:
+    interface: dbus
+    name: online.xournal.mobile
+    bus: session
