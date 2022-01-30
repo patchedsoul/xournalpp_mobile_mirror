@@ -7,4 +7,4 @@
 	dh $@
 
 build:
-	flutter build --no-sound-null-dafety linux
+	flutter build --no-sound-null-safety linux
