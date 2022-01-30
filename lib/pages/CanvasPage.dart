@@ -69,6 +69,7 @@ class _CanvasPageState extends State<CanvasPage> with TickerProviderStateMixin {
       vsync: this,
       duration: const Duration(milliseconds: 250),
     );
+    loadToolSettings();
   }
 
   @override
@@ -259,14 +260,19 @@ class _CanvasPageState extends State<CanvasPage> with TickerProviderStateMixin {
             child: EditingToolBar(
                 key: _editingToolbarKey,
                 deviceMap: _toolData,
-                color: toolColor,
+                getColor: getColor,
+                getWidth: getWidth,
                 onWidthChange: (newWidth) {
+                  rememberToolSettings();
                   setState(() {
                     toolWidth = newWidth *
                         2; // average pressure is 0.5, so multiplying by 2
+
                   });
                 },
                 onColorChange: (newColor) {
+                  rememberToolSettings();
+                  toolColor = newColor;
                   setState(() {
                     toolColor = newColor;
                   });
@@ -560,5 +566,29 @@ class _CanvasPageState extends State<CanvasPage> with TickerProviderStateMixin {
   void dispose() {
     _controllerReset.dispose();
     super.dispose();
+  }
+
+  Color getColor(){
+    return toolColor;
+  }
+
+  double getWidth(){
+    // average pressure is 0.5, so divide by 2
+    // see L266
+    return toolWidth / 2;
+  }
+
+  void rememberToolSettings(){
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setInt(PreferencesKeys.kToolColor, toolColor.value);
+      prefs.setDouble(PreferencesKeys.kToolWidth, toolWidth);
+    });
+  }
+
+  void loadToolSettings(){
+    SharedPreferences.getInstance().then((prefs) {
+      toolColor = Color(prefs.getInt(PreferencesKeys.kToolColor)!);
+      toolWidth = prefs.getDouble(PreferencesKeys.kToolWidth)!;
+    });
   }
 }

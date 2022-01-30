@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:xournalpp/pages/OpenPage.dart';
 
 import 'generated/l10n.dart';
@@ -111,6 +112,9 @@ class XournalppMobile extends StatelessWidget {
       localizationsDelegates: [
         S.delegate,
         DefaultMaterialLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
       theme: ThemeData(
