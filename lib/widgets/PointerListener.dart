@@ -73,7 +73,9 @@ class PointerListenerState extends State<PointerListener> {
             double? width = (data.pressure == 0
                 ? widget.strokeWidth
                 : data.pressure * widget.strokeWidth!);
-            if (isHighlighter(data)) width = width! * 5;
+
+            //A highlighter should not change its width
+            if (isHighlighter(data)) width = widget.strokeWidth;
             points.add(XppStrokePoint(
                 x: data.localPosition.dx,
                 y: data.localPosition.dy,
