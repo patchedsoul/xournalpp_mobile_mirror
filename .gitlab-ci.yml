@@ -21,7 +21,7 @@ build:apk:
   stage: build
   script:
     - set +o pipefail
-    - flutter build --no-sound-null-safety apk
+    - flutter build apk --no-sound-null-safety
     - set -o pipefail
     - mv build/app/outputs/apk/release/app-release.apk xournalpp-mobile-$VERSION.apk
   artifacts:
@@ -31,7 +31,7 @@ build:apk:
 build:bundle:
   stage: build
   script:
-    - flutter build --no-sound-null-safety appbundle
+    - flutter build appbundle --no-sound-null-safety
     - mv build/app/outputs/bundle/release/app-release.aab xournalpp-mobile-$VERSION.aab
   artifacts:
     paths:
@@ -43,7 +43,7 @@ build:web:
     - flutter config --enable-web
     - flutter pub get
     - set +o pipefail
-    - flutter build --no-sound-null-safety web
+    - flutter build web --no-sound-null-safety
     - cp -r build/web xournalpp-web-$VERSION
   artifacts:
     paths:
@@ -81,7 +81,7 @@ build:linux:
     git clone -b master https://github.com/flutter/flutter.git /flutter
     export PATH=$PATH:/flutter/bin
     flutter config --enable-linux-desktop
-    flutter build --no-sound-null-safety linux
+    flutter build linux --no-sound-null-safety
     mv build/linux/x64/release/bundle xournalpp-mobile-$VERSION
   artifacts:
     paths:
